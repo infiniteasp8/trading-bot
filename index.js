@@ -1,15 +1,16 @@
 // index.js
-const { tradeMultipleStocks } = require('./controllers/tradingBot');
-const config = require('./config/config');
+const express = require('express');
+const { trade } = require('./controllers/tradingBot');
+const logger = require('./utils/logger');
 
-// Start the trading bot with a check for market status
-(async () => {
-  console.log(`Starting Trading Bot with strategy: ${config.trading.strategy}`);
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-  if (config.trading.marketOpen) {
-    console.log('Market is open. Starting to trade...');
-    await tradeMultipleStocks();
-  } else {
-    console.log('Market is closed. No trading activity will occur.');
-  }
-})();
+app.get('/', (req, res) => {
+  res.send('Trading Bot is running');
+});
+
+app.listen(PORT, () => {
+  logger.info(`Server started on port ${PORT}`);
+  trade(); // Initiate trading logic when the server starts
+});

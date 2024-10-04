@@ -1,46 +1,18 @@
 // utils/logger.js
-
 const winston = require('winston');
-const path = require('path');
 
-// Define log format
-const logFormat = winston.format.printf(({ timestamp, level, message }) => {
-  return `${timestamp} [${level}]: ${message}`;
-});
-
-// Create a logger instance with options for file and console logging
+// Configure winston logger
 const logger = winston.createLogger({
-  level: 'info', // Log level can be changed dynamically
+  level: 'info',
   format: winston.format.combine(
-    winston.format.timestamp(),
     winston.format.colorize(),
-    winston.format.simple(),
-    logFormat
+    winston.format.timestamp(),
+    winston.format.printf(({ timestamp, level, message }) => `${timestamp} - ${level}: ${message}`)
   ),
   transports: [
-    new winston.transports.File({
-      filename: path.join(__dirname, '../logs/error.log'),
-      level: 'error',
-      format: winston.format.json(),
-    }),
-    new winston.transports.File({
-      filename: path.join(__dirname, '../logs/combined.log'),
-      format: winston.format.json(),
-    }),
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple(),
-        winston.format.timestamp(),
-        logFormat
-      ),
-    }),
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'logs/trading-bot.log' })
   ],
 });
-
-// Helper functions for different log levels
-logger.infoLog = (message) => logger.log('info', message);
-logger.errorLog = (message) => logger.log('error', message);
-logger.warnLog = (message) => logger.log('warn', message);
 
 module.exports = logger;

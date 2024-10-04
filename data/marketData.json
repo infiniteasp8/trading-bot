@@ -1,0 +1,28 @@
+{
+    "initialBalance": 10000,
+    "stockHoldings": [],
+    "stocks": [
+      {
+        "symbol": "AAPL",
+        "prices": [
+          { "time": "2024-10-04T17:30:00Z", "price": 135 },
+          { "time": "2024-10-04T18:30:00Z", "price": 140 }
+        ]
+      },
+      {
+        "symbol": "GOOGL",
+        "prices": [
+          { "time": "2024-10-04T17:30:00Z", "price": 2450 },
+          { "time": "2024-10-04T18:30:00Z", "price": 2430 }
+        ]
+      },
+      {
+        "symbol": "MSFT",
+        "prices": [
+          { "time": "2024-10-04T17:30:00Z", "price": 295 },
+          { "time": "2024-10-04T18:30:00Z", "price": 300 }
+        ]
+      }
+    ]
+  }
+  

@@ -1,108 +1,78 @@
+// controllers/tradingBot.js
+const { checkMarketStatus, getRealTimeStockData, getMockStockData } = require('../services/finnhubService');
+const logger = require('../utils/logger');
+const profitLoss = require('../utils/profitLoss');
+const { TRADING_PARAMETERS } = require('../config/config');
+// We can add more companies with our interests or some more dpeth logic
+const symbolsToTrack = ['AAPL', 'GOOGL', 'MSFT'];
 
-const finnhubService = require('../services/finnhubService');
-const { movingAverageStrategy } = require('../strategies/movingAverage');
-const { momentumStrategy } = require('../strategies/momentum');
-const config = require('../config/config');
-const logger = require('../utils/logger'); // Import the custom logger
-
-let balance = config.trading.balance;
-let positions = {};
-let profitLoss = 0;
-
-// Function to check if the market is open or closed
-function isMarketOpen() {
-  return config.trading.marketOpen;
-}
-
-// Log profit/loss and performance metrics
-function logPerformanceMetrics(symbol, price, action) {
-  let currentProfitLoss = balance + (positions[symbol] || 0) * price - config.trading.balance;
-  logger.infoLog(`Symbol: ${symbol} | Action: ${action} | Current Profit/Loss: ${currentProfitLoss.toFixed(2)}`);
-  logger.infoLog(`Balance: ${balance.toFixed(2)} | Stock Positions: ${JSON.stringify(positions)}`);
-}
-
-// Simulate trades for a single stock symbol based on strategy
-async function tradeStock(symbol, strategy = 'movingAverage') {
-  if (!isMarketOpen()) {
-    logger.warnLog(`Market is closed. No trading activity for ${symbol}`);
-    return;
-  }
-
+const trade = async () => {
   try {
-    // Fetch the latest stock prices (mock data or real data)
-    const stockData = await finnhubService.fetchStockPrice(symbol);
-    const prices = [stockData.o, stockData.h, stockData.l, stockData.c]; // Open, High, Low, Close prices
-
-    let action;
-    switch (strategy) {
-      case 'momentum':
-        action = momentumStrategy(prices);
-        break;
-      case 'movingAverage':
-      default:
-        action = movingAverageStrategy(prices);
-        break;
+    let isMarketOpen;
+    try {
+      isMarketOpen = await checkMarketStatus();
+    } catch (error) {
+      logger.error('Error checking market status. Assuming market is closed.');
+      isMarketOpen = false;
     }
 
-    // Execute the trade based on the action
-    if (action === 'buy') {
-      buyStock(symbol, stockData.c);
-    } else if (action === 'sell') {
-      sellStock(symbol, stockData.c);
+    let stockData;
+    if (isMarketOpen) {
+      logger.info('Market is open. Fetching real-time data from Finnhub API.');
+      stockData = await getRealTimeStockData(symbolsToTrack);
     } else {
-      logger.infoLog(`Symbol: ${symbol} | No action needed, holding position`);
+      logger.warn('Market is closed. Using mock data from local JSON file.');
+      stockData = getMockStockData();
     }
 
-    // Log performance metrics after every trade
-    logPerformanceMetrics(symbol, stockData.c, action);
+    if (!stockData || !stockData.stocks || stockData.stocks.length === 0) {
+      logger.error('Stock data is empty or not in expected format.');
+      return;
+    }
 
-    
+    executeTradingStrategy(stockData);
+    profitLoss.printSummary();  // Print profit/loss summary at the end of trading session
   } catch (error) {
-    logger.errorLog(`Error trading stock ${symbol}: ${error.message}`);
+    logger.error(`Error executing trade: ${error.message}`);
   }
-}
-
-// Buy stock
-function buyStock(symbol, price) {
-  const quantity = balance / price;
-  if (quantity > 0) {
-    balance -= quantity * price;
-    positions[symbol] = (positions[symbol] || 0) + quantity;
-    logger.infoLog(`Bought ${quantity.toFixed(2)} units of ${symbol} at price ${price}`);
-  } else {
-    logger.warnLog(`Insufficient balance to buy ${symbol}`);
-  }
-}
-
-// Sell stock
-function sellStock(symbol, price) {
-  const quantity = positions[symbol] || 0;
-  if (quantity === 0) {
-    logger.warnLog(`No stock holdings available to sell ${symbol}.`);
-    return;
-  }
-
-  balance += quantity * price;
-  positions[symbol] = 0;
-  logger.infoLog(`Sold ${quantity.toFixed(2)} units of ${symbol} at price ${price}`);
-}
-
-// Monitor and trade multiple stocks
-async function tradeMultipleStocks() {
-  if (!isMarketOpen()) {
-    logger.warnLog(`Market is currently closed. No trading activity will occur.`);
-    return;
-  }
-
-  const stockSymbols = config.trading.defaultStocks;
-  for (const symbol of stockSymbols) {
-    await tradeStock(symbol, config.trading.strategy);
-  }
-
-  logger.infoLog('Final Balance:', balance.toFixed(2));
-  logger.infoLog('Positions:', JSON.stringify(positions));
-}
-
-module.exports = {
-  tradeMultipleStocks,
 };
+
+const executeTradingStrategy = (stockData) => {
+  let currentBalance = stockData.initialBalance || TRADING_PARAMETERS.INITIAL_BALANCE;
+  let stockHoldings = stockData.stockHoldings || [];
+
+  stockData.stocks.forEach(stock => {
+    const { symbol, prices } = stock;
+    if (!prices || prices.length === 0) {
+      logger.warn(`No price data available for ${symbol}. Skipping.`);
+      return;
+    }
+
+    const latestPrice = prices[prices.length - 1].price;
+
+    // Buy Condition: Buy if price is below the BUY_THRESHOLD and balance is sufficient
+    if (latestPrice < TRADING_PARAMETERS.BUY_THRESHOLD && currentBalance >= latestPrice * 10) {
+      logger.info(`Buying 10 shares of ${symbol} at $${latestPrice}`);
+      stockHoldings.push({ symbol, quantity: 10, purchasePrice: latestPrice });
+      const cost = latestPrice * 10;
+      currentBalance -= cost;
+      profitLoss.updateBalance(-cost);
+      profitLoss.logTrade(symbol, 'BUY', 10, latestPrice);
+    }
+
+    // Sell Condition: Sell if price exceeds purchase price by SELL_THRESHOLD
+    const holding = stockHoldings.find(h => h.symbol === symbol);
+    if (holding && holding.purchasePrice * TRADING_PARAMETERS.SELL_THRESHOLD < latestPrice) {
+      logger.info(`Selling 10 shares of ${symbol} at $${latestPrice}`);
+      const revenue = latestPrice * holding.quantity;
+      currentBalance += revenue;
+      stockHoldings = stockHoldings.filter(h => h.symbol !== symbol);
+      const profit = revenue - (holding.purchasePrice * holding.quantity);
+      profitLoss.updateBalance(revenue);
+      profitLoss.logTrade(symbol, 'SELL', holding.quantity, latestPrice, profit);
+    }
+  });
+};
+
+// Export the trade function
+module.exports = { trade };
