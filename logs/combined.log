@@ -1,0 +1,46 @@
+{"level":"\u001b[31merror\u001b[39m","message":"Error trading stock AAPL: read ECONNRESET","timestamp":"2024-10-04T13:16:22.257Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell GOOGL.","timestamp":"2024-10-04T13:16:23.153Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: GOOGL | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T13:16:23.155Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T13:16:23.156Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell MSFT.","timestamp":"2024-10-04T13:16:23.608Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: MSFT | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T13:16:23.609Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T13:16:23.609Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Final Balance:","timestamp":"2024-10-04T13:16:23.610Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Positions:","timestamp":"2024-10-04T13:16:23.611Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell AAPL.","timestamp":"2024-10-04T13:16:43.193Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: AAPL | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T13:16:43.197Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T13:16:43.197Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell GOOGL.","timestamp":"2024-10-04T13:16:43.500Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: GOOGL | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T13:16:43.500Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T13:16:43.501Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell MSFT.","timestamp":"2024-10-04T13:16:43.984Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: MSFT | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T13:16:43.985Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T13:16:43.986Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Final Balance:","timestamp":"2024-10-04T13:16:43.986Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Positions:","timestamp":"2024-10-04T13:16:43.987Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell AAPL.","timestamp":"2024-10-04T16:32:59.872Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: AAPL | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T16:32:59.896Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T16:32:59.897Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell GOOGL.","timestamp":"2024-10-04T16:33:00.370Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: GOOGL | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T16:33:00.371Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T16:33:00.372Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell MSFT.","timestamp":"2024-10-04T16:33:00.671Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: MSFT | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T16:33:00.672Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T16:33:00.673Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell AMZN.","timestamp":"2024-10-04T16:33:01.145Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: AMZN | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T16:33:01.146Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T16:33:01.146Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell GOOG.","timestamp":"2024-10-04T16:33:01.613Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: GOOG | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T16:33:01.614Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T16:33:01.614Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell NVDA.","timestamp":"2024-10-04T16:33:02.075Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: NVDA | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T16:33:02.076Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T16:33:02.077Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell MA.","timestamp":"2024-10-04T16:33:02.411Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: MA | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T16:33:02.411Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T16:33:02.411Z"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"No stock holdings available to sell JPM.","timestamp":"2024-10-04T16:33:02.873Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Symbol: JPM | Action: sell | Current Profit/Loss: 0.00","timestamp":"2024-10-04T16:33:02.874Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Balance: 10000.00 | Stock Positions: {}","timestamp":"2024-10-04T16:33:02.874Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Final Balance:","timestamp":"2024-10-04T16:33:02.875Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"Positions:","timestamp":"2024-10-04T16:33:02.875Z"}
